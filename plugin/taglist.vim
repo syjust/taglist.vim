@@ -435,7 +435,7 @@ let s:tlist_def_pascal_settings = 'pascal;f:function;p:procedure'
 let s:tlist_def_perl_settings = 'perl;c:constant;l:label;p:package;s:subroutine'
 
 " php language
-let s:tlist_def_php_settings = 'php;c:class;d:constant;v:variable;f:function'
+let s:tlist_def_php_settings = 'php;c:class;d:const;f:func;i:interface'
 
 " python language
 let s:tlist_def_python_settings = 'python;c:class;m:member;f:function'
@@ -2234,6 +2234,9 @@ function! s:Tlist_Process_File(filename, ftype)
 
     " Exuberant ctags arguments to generate a tag list
     let ctags_args = ' -f - --format=2 --excmd=pattern --fields=nks '
+    if !exists('ctags_common_args')
+        let ctags_args = ctags_args . g:ctags_common_args
+    endif
 
     " Form the ctags argument depending on the sort type
     if s:tlist_{fidx}_sort_type == 'name'
